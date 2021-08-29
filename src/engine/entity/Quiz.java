@@ -24,6 +24,9 @@ public class Quiz {
     @NotEmpty
     private String text;
 
+    @NotEmpty
+    private String author;
+
     @Size(min = 2)
     @NotNull
     @ElementCollection
@@ -72,12 +75,20 @@ public class Quiz {
         this.answer = answer;
     }
 
-    public Quiz(QuizDTO quizDTO) {
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Quiz(QuizDTO quizDTO, String author) {
         this.text = quizDTO.getText();
         this.title = quizDTO.getTitle();
         this.options = quizDTO.getOptions();
         this.answer = quizDTO.getAnswer();
-
+        this.author = author;
     }
 
     public Quiz() {

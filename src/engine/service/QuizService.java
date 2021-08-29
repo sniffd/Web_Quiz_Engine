@@ -20,8 +20,8 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
-    public QuizResponse create(QuizDTO quizDTO) {
-        Quiz quiz = quizRepository.save(new Quiz(quizDTO));
+    public QuizResponse create(QuizDTO quizDTO, String author) {
+        Quiz quiz = quizRepository.save(new Quiz(quizDTO, author));
         return new QuizResponse(quiz);
     }
 
@@ -39,7 +39,7 @@ public class QuizService {
         return quizRepository.existsById(id);
     }
 
-    public SolveResponse solve(int id, AnswerDTO answer) {
+    public SolveResponse solve(long id, AnswerDTO answer) {
         SolveResponse solveResponse = new SolveResponse();
         if (answer.getAnswer().equals(get(id).getAnswer())) {
             solveResponse.setSuccess(true);
@@ -50,5 +50,9 @@ public class QuizService {
         }
 
         return solveResponse;
+    }
+
+    public void delete(long id) {
+        quizRepository.deleteById(id);
     }
 }
