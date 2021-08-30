@@ -1,8 +1,6 @@
 package engine.controller;
 
 import engine.model.CredentialsDto;
-import engine.model.QuizDTO;
-import engine.model.QuizResponse;
 import engine.service.RegisterService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

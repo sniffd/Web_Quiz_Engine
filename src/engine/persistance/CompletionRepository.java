@@ -1,12 +1,10 @@
 package engine.persistance;
 
-import engine.entity.Quiz;
+import engine.entity.Completion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface QuizRepository extends CrudRepository<Quiz, Long> {
-    Page<Quiz> findAll(Pageable paging);
+public interface CompletionRepository extends CrudRepository<Completion, Long> {
+    Page<Completion> findByUser(String user, Pageable paging);
 }

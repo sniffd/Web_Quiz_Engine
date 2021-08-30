@@ -1,18 +1,14 @@
 package engine.controller;
 
-import engine.model.AnswerDTO;
-import engine.model.QuizDTO;
-import engine.model.QuizResponse;
-import engine.model.SolveResponse;
-import engine.service.MyUserPrincipal;
+import engine.model.*;
 import engine.service.QuizService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 public class WebQuizEngineController {
@@ -37,16 +33,21 @@ public class WebQuizEngineController {
     }
 
     @GetMapping("/api/quizzes")
-    public ResponseEntity<List<QuizResponse>> getAllQuizzes() {
-        return ResponseEntity.ok(quizService.getAll());
+    public ResponseEntity<Page<QuizResponse>> getAllQuizzes(@RequestParam(defaultValue = "0") int page) {
+        return ResponseEntity.ok(quizService.getAll(page));
     }
 
     @PostMapping("/api/quizzes/{id}/solve")
-    public ResponseEntity<SolveResponse> solveQuiz(@PathVariable long id, @RequestBody AnswerDTO answer) {
+    public ResponseEntity<SolveResponse> solveQuiz(@PathVariable long id, @RequestBody AnswerDTO answer, Principal principal) {
         if (!quizService.isExist(id)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(quizService.solve(id, answer));
+        return ResponseEntity.ok(quizService.solve(id, answer, principal.getName()));
+    }
+
+    @GetMapping("/api/quizzes/completed")
+    public ResponseEntity<Page<CompletionDto>> getCompleted(@RequestParam(defaultValue = "0") int page, Principal principal) {
+        return ResponseEntity.ok(quizService.getCompleted(page, principal.getName()));
     }
 
     @DeleteMapping("/api/quizzes/{id}")

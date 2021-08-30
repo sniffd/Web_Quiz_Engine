@@ -5,7 +5,7 @@ import java.util.List;
 
 public class AnswerDTO {
 
-  List<Integer> answer;
+  private List<Integer> answer;
 
   public List<Integer> getAnswer() {
     return answer == null ? new ArrayList<>() : answer;
